@@ -1,0 +1,16 @@
+FROM centos
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+    sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
+    yum update -y && \
+    rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+COPY docker/logstash.repo /etc/yum.repos.d/logstash.repo 
+RUN yum install -y logstash  && \
+    yum install -y curl  && \
+    curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.5.3-x86_64.rpm && \
+    rpm -vi filebeat-8.5.3-x86_64.rpm
+COPY docker/beat-filter.conf /etc/logstash/conf.d/
+COPY docker/beat-input.conf /etc/logstash/conf.d/
+COPY docker/beat-output.conf /etc/logstash/conf.d/
+COPY --chown=root:filebeat filebeat.yml /etc/filebeat/filebeat.yml
+# RUN rm -rf /opt/tomcat/webapps/ROOT
+# COPY docker/queuesendersvc-0.0.1-SNAPSHOT.war /opt/tomcat/webapps/ROOT.war
