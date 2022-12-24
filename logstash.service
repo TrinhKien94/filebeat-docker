@@ -1,0 +1,9 @@
+[Unit]
+Description = logstash
+After = network.target
+
+[Service]
+ExecStart =  /logstash/bin/logstash -f /logstash/config/logstash.conf
+
+[Install]
+WantedBy = multi-user.target
