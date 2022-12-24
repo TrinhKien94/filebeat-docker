@@ -1,0 +1,5 @@
+FROM centos
+COPY filebeat-8.5.3-x86_64.rpm /filebeat-8.5.3-x86_64.rpm
+RUN rpm -vi /filebeat-8.5.3-x86_64.rpm
+COPY --chown=root:filebeat filebeat.yml /etc/filebeat/filebeat.yml
+CMD filebeat -c /etc/filebeat/filebeat.yml & bash

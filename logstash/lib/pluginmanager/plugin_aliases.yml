@@ -1,0 +1,4 @@
+#CHECKSUM: 577f876dfd44026dcfdd8befa39cd0b235075049f99c82caed90e25194bbc95d
+# DON'T EDIT THIS FILE, PLEASE REFER TO logstash-core/src/main/resources/org/logstash/plugins/AliasRegistry.yml
+input:
+  elastic_agent: beats
